@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Recognition</title>
+    <script>
+        function validateImage() {
+            var input = document.getElementById('fileInput');
+            var img = new Image();
+            img.src = window.URL.createObjectURL(input.files[0]);
+            img.onload = function() {
+                if (img.width === 28 && img.height === 28) {
+                    document.getElementById('uploadForm').submit();
+                } else {
+                    alert('Please upload a picture with dimensions 28x28 pixels.');
+                }
+            };
+        }
+    </script>
+</head>
+<body style="font-family: 'Arial', sans-serif; margin: 20px; text-align: center;">
+
+    <header>
+        <h1 style="color: #333; margin-bottom: 20px;">Handwritten Digit Recognition Using Convolutional Neural Networks Explained</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2 style="color: #333; margin-bottom: 10px;">Research Paper: </h2>
+            <p style="color: #555; margin-bottom: 20px;">The following is a research paper about Handwritten Digit Recognition Using Convolutional Neural Networks, scroll please.</p>
+        </section>
+
+        <!-- Embed the PDF -->
+        <div style="border: 1px solid #ccc; margin-bottom: 20px; padding: 10px;">
+            <embed src="{{ url_for('static', filename='Handwritten_Digit_Recognition_Using_CNN.pdf') }}" type="application/pdf" width="100%" height="600px"/>
+        </div>
+
+        <section>
+            <h2 style="color: #333; margin-bottom: 10px;">Digit Recognition Web Application: </h2>
+            <p style="color: #555; margin-bottom: 20px;">This is a proof of concept for recognizing handwritten digits using Convolutional Neural Networks (CNN).</p>
+
+            <form id="uploadForm" action="/" method="post" enctype="multipart/form-data" style="margin-bottom: 20px;">
+                <label for="fileInput" style="margin-right: 10px;">Upload a picture please:</label>
+                <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg" style="margin-right: 10px;">
+                <button type="button" onclick="validateImage()" style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Recognize the Digit</button>
+            </form>
+
+            {% if filename %}
+                <h3 style="color: #333; margin-bottom: 10px;">The Uploaded Picture: </h3>
+                <img src="{{ filename }}" alt="Uploaded Image" style="max-width: 100%; margin-bottom: 20px;">
+                {% if predicted_digit is defined %}
+                    <h3 style="color: #333;">The Recognized Digit is: {{ predicted_digit }}</h3>
+                {% endif %}
+            {% elif error %}
+                <h3 style="color: #FF0000; margin-bottom: 10px;">Error</h3>
+                <p style="color: #FF0000;">{{ error }}</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
