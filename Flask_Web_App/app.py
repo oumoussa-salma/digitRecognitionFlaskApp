@@ -50,6 +50,6 @@ def predict_digit():
         print(e)
         return render_template('index.html', error="Error occurred during prediction.")
 
-
+#main func
 if __name__ == '__main__':
     app.run(debug=True)
